@@ -6,7 +6,7 @@ const fetchNews = async(url) => {
         // console.log(data)
         return data.data.articles
     } catch (error) {
-        console.log(error);
+        return error
     }
 }
 

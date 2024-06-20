@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef} from 'react'
+import {useState, useRef} from 'react'
 import {
     Row,
     Col,
@@ -111,9 +111,9 @@ function Home() {
                         </Form>
                     </Navbar.Collapse>
 
-                    <Button variant="primary" className="rounded-2">
-                        LogIn
-                    </Button>
+                    <button>
+
+                    </button>
                 </Container>
             </Navbar>
 
@@ -137,8 +137,8 @@ function Home() {
                                     onClick={(e) => handleCategoryClick(e)}
                                     type='checkbox'
                                     id='default-checkbox-1'
-                                    label='World'
-                                    name='world'
+                                    label='Food'
+                                    name='food'
                                     className='text-primary link-secondary checkBox'
                                 />
                                 <Form.Check
@@ -156,7 +156,7 @@ function Home() {
                                     type='checkbox'
                                     id='default-checkbox-3'
                                     label='Technology'
-                                    name='technology'
+                                    name='tech'
                                     className='text-primary link-secondary checkBox'
                                 />
                                 <Form.Check
@@ -182,8 +182,8 @@ function Home() {
                                     onClick={(e) => handleCategoryClick(e)}
                                     type='checkbox'
                                     id='default-checkbox-6'   
-                                    label='Nation'
-                                    name='nation'
+                                    label='Politics'
+                                    name='politics'
                                     className='text-primary link-secondary checkBox'
                                 />
                                 <Form.Check
@@ -206,7 +206,7 @@ function Home() {
                                 />
                                 <Button
                                     onClick={(e) => handleClearCategories(e)}
-                                    variant='secondary'
+                                    className='btn-danger btn-sm'
                                 >
                                     Clear Categories
                                 </Button>
@@ -230,7 +230,7 @@ function Home() {
                                     <Dropdown.Item
                                         onClick={(e) => {
                                             e.preventDefault()
-                                            setsortBy(prev => "publishedAt")
+                                            setsortBy(prev => "published_at")
                                         }}
                                     >
                                         publishedAt
@@ -238,7 +238,7 @@ function Home() {
                                     <Dropdown.Item
                                         onClick={(e) => {
                                             e.preventDefault()
-                                            setsortBy(prev => "relevance")
+                                            setsortBy(prev => "relevance_score")
                                         }}
                                     >
                                         relevance
