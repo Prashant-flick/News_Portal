@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useRef} from 'react'
 import {
     Row,
     Col,
@@ -16,10 +16,10 @@ function Home() {
     const [category, setcategory] = useState([])
     const [sortBy, setsortBy] = useState("")
     const [country, setcountry] = useState("")
-
-    console.log(category);
+    const [searchTerm, setsearchTerm] = useState("")
 
     const countries = [
+        "None",
         "US", // United States
         "CN", // China
         "IN", // India
@@ -42,6 +42,38 @@ function Home() {
         "CA"
     ];
 
+    const elementsRef = useRef(null);
+    const searchRef = useRef(null);
+
+    const handleCategoryClick = (e) => {
+        setsearchTerm(prev => "")
+        searchRef.current.value = ""
+        if(e.target.checked === true){
+            setcategory((prev) => [...prev, e.target.name])
+        }else{
+            setcategory((prev) => prev.filter((elem) => elem!==e.target.name))
+        }
+    }
+
+    const handleClearCategories = (e) => {
+        e.preventDefault();
+        setcategory([]);
+        const elements = elementsRef.current.querySelectorAll('.checkBox');
+        elements.forEach(element => {
+            element.children[0].checked = false
+        });
+    };
+
+    const handleSearchTerm = (e) => {
+        e.preventDefault()
+        setcategory([]);
+        const elements = elementsRef.current.querySelectorAll('.checkBox');
+        elements.forEach(element => {
+            element.children[0].checked = false
+        });
+        setsearchTerm(prev => e.target.search.value)
+    }
+
     return (
         <>
             <Navbar bg="light" expand="lg" className="mb-4">
@@ -57,15 +89,23 @@ function Home() {
 
                         </Nav>
 
-                        <Form className="d-flex">
+                        <Form 
+                            onSubmit={(e) => handleSearchTerm(e)}
+                            className="d-flex"
+                        >
                             <FormControl
+                                ref={searchRef}
                                 type="text"
                                 placeholder="Search"
                                 className="me-2"
                                 name="search"
                             />
 
-                            <Button type="submit" variant="outline-primary" className="me-2">
+                            <Button 
+                                type="submit" 
+                                variant="outline-primary" 
+                                className="me-2"
+                            >
                                 Search
                             </Button>
                         </Form>
@@ -82,96 +122,90 @@ function Home() {
                     <Col xs={12} md={2}>
                         <h5>Categories</h5>
                         <Nav className='flex-column mb-4'>
-                            <Form>
+                            <Form ref={elementsRef}>
                                 <Form.Check
                                     defaultChecked={false}
-                                    onClick={(e) => {
-                                        if(e.target.checked === true){
-                                            setcategory((prev) => [...prev, "World"])
-                                        }else{
-                                            setcategory((prev) => prev.filter((elem) => elem!=="World"))
-                                        }
-                                    }}
+                                    onClick={(e) => handleCategoryClick(e)}
+                                    type='checkbox'
+                                    id='default-checkbox-0'
+                                    label='General'
+                                    name='general'
+                                    className='text-primary link-secondary checkBox'
+                                />
+                                <Form.Check
+                                    defaultChecked={false}
+                                    onClick={(e) => handleCategoryClick(e)}
                                     type='checkbox'
                                     id='default-checkbox-1'
                                     label='World'
-                                    className='text-primary link-secondary'
+                                    name='world'
+                                    className='text-primary link-secondary checkBox'
                                 />
                                 <Form.Check
                                     defaultChecked={false}
-                                    onClick={(e) => {
-                                        if(e.target.checked === true){
-                                            setcategory((prev) => [...prev, "Business"])
-                                        }else{
-                                            setcategory((prev) => prev.filter((elem) => elem!=="Business"))
-                                        }
-                                    }}
+                                    onClick={(e) => handleCategoryClick(e)}
                                     type='checkbox'
                                     id='default-checkbox-2'
                                     label='Business'
-                                    className='text-primary link-secondary'
+                                    name='business'
+                                    className='text-primary link-secondary checkBox'
                                 />
                                 <Form.Check
                                     defaultChecked={false}
-                                    onClick={(e) => {
-                                        if(e.target.checked === true){
-                                            setcategory((prev) => [...prev, "Technology"])
-                                        }else{
-                                            setcategory((prev) => prev.filter((elem) => elem!=="Technology"))
-                                        }
-                                    }}
+                                    onClick={(e) => handleCategoryClick(e)}
                                     type='checkbox'
                                     id='default-checkbox-3'
                                     label='Technology'
-                                    className='text-primary link-secondary'
+                                    name='technology'
+                                    className='text-primary link-secondary checkBox'
                                 />
                                 <Form.Check
                                     defaultChecked={false}
-                                    onClick={(e) => {
-                                        if(e.target.checked === true){
-                                            setcategory((prev) => [...prev, "Sports"])
-                                        }else{
-                                            setcategory((prev) => prev.filter((elem) => elem!=="Sports"))
-                                        }
-                                    }}
+                                    onClick={(e) => handleCategoryClick(e)}
                                     type='checkbox'
                                     id='default-checkbox-4'
                                     label='Sports'
-                                    className='text-primary link-secondary'
+                                    name='sports'
+                                    className='text-primary link-secondary checkBox'
                                 />
                                 <Form.Check
                                     defaultChecked={false}
-                                    onClick={(e) => {
-                                        if(e.target.checked === true){
-                                            setcategory((prev) => [...prev, "Entertainment"])
-                                        }else{
-                                            setcategory((prev) => prev.filter((elem) => elem!=="Entertainment"))
-                                        }
-                                    }}
+                                    onClick={(e) => handleCategoryClick(e)}
                                     type='checkbox'
                                     id='default-checkbox-5'
                                     label='Entertainment'
-                                    className='text-primary link-secondary'
+                                    name='entertainment'
+                                    className='text-primary link-secondary checkBox'
                                 />
                                 <Form.Check
                                     defaultChecked={false}
-                                    onClick={(e) => {
-                                        if(e.target.checked === true){
-                                            setcategory((prev) => [...prev, "Politics"])
-                                        }else{
-                                            setcategory((prev) => prev.filter((elem) => elem!=="Politics"))
-                                        }
-                                    }}
+                                    onClick={(e) => handleCategoryClick(e)}
                                     type='checkbox'
                                     id='default-checkbox-6'   
-                                    label='Politcs'
-                                    className='text-primary link-secondary'
+                                    label='Nation'
+                                    name='nation'
+                                    className='text-primary link-secondary checkBox'
+                                />
+                                <Form.Check
+                                    defaultChecked={false}
+                                    onClick={(e) => handleCategoryClick(e)}
+                                    type='checkbox'
+                                    id='default-checkbox-7'   
+                                    label='Science'
+                                    name='science'
+                                    className='text-primary link-secondary checkBox'
+                                />
+                                <Form.Check
+                                    defaultChecked={false}
+                                    onClick={(e) => handleCategoryClick(e)}
+                                    type='checkbox'
+                                    id='default-checkbox-8'   
+                                    label='Health'
+                                    name='health'
+                                    className='text-primary link-secondary checkBox'
                                 />
                                 <Button
-                                    onClick={(e)=> {
-                                        e.preventDefault()
-                                        
-                                    }}
+                                    onClick={(e) => handleClearCategories(e)}
                                     variant='secondary'
                                 >
                                     Clear Categories
@@ -185,11 +219,29 @@ function Home() {
                                     SortBy
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item>
+                                    <Dropdown.Item
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            setsortBy(prev => "")
+                                        }}
+                                    >
+                                        None
+                                    </Dropdown.Item>
+                                    <Dropdown.Item
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            setsortBy(prev => "publishedAt")
+                                        }}
+                                    >
                                         publishedAt
                                     </Dropdown.Item>
-                                    <Dropdown.Item>
-                                        popularity
+                                    <Dropdown.Item
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            setsortBy(prev => "relevance")
+                                        }}
+                                    >
+                                        relevance
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
@@ -204,7 +256,16 @@ function Home() {
                                     {
                                         countries.map((elem, index) => {
                                             return(
-                                                <Dropdown.Item id={index}>
+                                                <Dropdown.Item key={index}
+                                                    onClick={(e) => {
+                                                        e.preventDefault()
+                                                        if(elem === "None"){
+                                                            setcountry("")
+                                                        }else{
+                                                            setcountry(prev => elem.toLowerCase())
+                                                        }
+                                                    }}
+                                                >
                                                     {elem}
                                                 </Dropdown.Item>
                                             )
@@ -217,7 +278,7 @@ function Home() {
                     </Col>
 
                     <Col xs={12} md={10}>
-                        <NewsList />
+                        <NewsList Category={category} Country={country} SortBy={sortBy} SearchTerm={searchTerm}/>
                     </Col>
                 </Row>
             </Container>
