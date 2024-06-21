@@ -1,5 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import favouriteReducer from "./favouriteSlice";
+import CurrentArticleReducer from "./CurrentArticleSlice";
+import ColorModeReducer from "./ColorModeSlice";
+
 import {
     persistReducer,
 } from 'redux-persist'
@@ -8,6 +11,8 @@ import { combineReducers } from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
     favouriteReducer,
+    CurrentArticleReducer,
+    ColorModeReducer
 })
 
 const persistConfig = {

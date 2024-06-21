@@ -7,7 +7,11 @@ import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App.jsx'
-import Favourite from './Pages/Favourite.jsx'
+import {
+	Home,
+	Favourite,
+	DetailedArticle
+} from "./Pages/index.js"
 
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
@@ -18,10 +22,20 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <App/>,
-    },
-    {
-		path: '/favourite',
-		element: <Favourite />
+		children: [
+			{
+				path: '/',
+				element: <Home />
+			},
+			{
+				path: '/favourite',
+				element: <Favourite />
+			},
+			{
+				path: '/article/:uuid',
+				element: <DetailedArticle />
+			}
+		]
     }
 ])
 

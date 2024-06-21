@@ -37,7 +37,6 @@ function UseNewsData(props, currentPage) {
 
                 api_url = api_url + categoryParam + searchParam
                 api_url = api_url + countryParam + sortParam + "&language=en" + api_key + '&limit=3' + `&page=${currentPage}`;
-                console.log(api_url);
                 const data = await axios.get(api_url)
                 settotalArticles(prev => data.data.meta.found)
                 setnewsData(prev => data.data.data)

@@ -8,15 +8,25 @@ import {
 	Card
 } from 'react-bootstrap'
 import AddToFavourite from './AddToFavourite';
+import { addArticle } from '../Store/CurrentArticleSlice';
+import { useNavigate } from 'react-router-dom';
 
-function FavouriteNewsList(props) {
+function FavouriteNewsList() {
     const favNews = useSelector((state) => state.favouriteReducer.ArticleData)
     const [currentPage, setCurrentPage] = useState(1);
-	const { SearchTerm } = props
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
 	
 	const handlePagination = (i) => {
 		setCurrentPage(i);
 	}
+
+	const handleReadMore = (e, article) => {
+		e.preventDefault()
+		dispatch(addArticle(article))
+		navigate(`/article/${article?.uuid}`)
+	}
+
 	const totalPages = Math.ceil(favNews.length/3)
 
 	if(totalPages === 0){
@@ -48,7 +58,9 @@ function FavouriteNewsList(props) {
 									<Card.Title>{article?.title}</Card.Title>
 									<Card.Text>{article?.description}</Card.Text>
 									<Card.Text>{article?.snippet}</Card.Text>
-									<Card.Link href={article?.url}>read more</Card.Link>
+									<Card.Link
+										onClick={(e) => handleReadMore(e, article)}
+									>read more...</Card.Link>
 								</Card.Body>
 							</Card>
 						</Col>

@@ -1,22 +1,15 @@
-import React from "react"
 import {
-    Row,
-    Col,
-    Navbar,
-    Nav,
-    Form,
-    FormControl,
-    Button,
-    Dropdown,
-    Container
-} from "react-bootstrap"
-import {
-    Home
-} from "./Pages/index" 
+    NavBar
+} from "./Component/index"
+import { Outlet } from "react-router-dom"
 
 function App() {
+
     return(
-        <Home/>
+        <>
+            <NavBar />
+            <Outlet />
+        </>
     )
 }
 
