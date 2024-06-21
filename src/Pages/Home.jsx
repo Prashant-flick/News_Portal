@@ -1,4 +1,4 @@
-import {useState, useRef} from 'react'
+import {useState, useRef, useEffect} from 'react'
 import {
     Row,
     Col,
@@ -19,6 +19,11 @@ function Home() {
     const [country, setcountry] = useState("")
     const [searchTerm, setsearchTerm] = useState("")
     const [showhover, setshowhover] = useState(false)
+    const [winSize, setwinSize] = useState(null)
+
+    console.log(category);
+    console.log(sortBy);
+    console.log(country);
 
     const countries = [
         "None",
@@ -44,11 +49,16 @@ function Home() {
         "CA"
     ];
 
+    useEffect(() => {
+        setwinSize(window.innerWidth)
+    },[winSize])
+
     const elementsRef = useRef(null);
     const searchRef = useRef(null);
     const navigate = useNavigate()
 
     const handleCategoryClick = (e) => {
+        console.log(e.target.name);
         setsearchTerm(prev => "")
         searchRef.current.value = ""
         if(e.target.checked === true){
@@ -79,7 +89,7 @@ function Home() {
 
     return (
         <>
-            <Navbar bg="light" expand="lg" className="mb-4">
+            <Navbar bg="light" expand="lg" className="mb-1">
                 <Container>
                     <Navbar.Brand href="/" className="fw-bold fs-4">
                         NewsLetter
@@ -135,102 +145,112 @@ function Home() {
             </Navbar>
 
             <Container>
-                <Row>
-                    <Col xs={12} md={2}>
-                        <h5>Categories</h5>
-                        <Nav className='flex-column mb-4'>
-                            <Form ref={elementsRef}>
-                                <Form.Check
-                                    defaultChecked={false}
-                                    onClick={(e) => handleCategoryClick(e)}
-                                    type='checkbox'
-                                    id='default-checkbox-0'
-                                    label='General'
-                                    name='general'
-                                    className='text-primary link-secondary checkBox'
-                                />
-                                <Form.Check
-                                    defaultChecked={false}
-                                    onClick={(e) => handleCategoryClick(e)}
-                                    type='checkbox'
-                                    id='default-checkbox-1'
-                                    label='Food'
-                                    name='food'
-                                    className='text-primary link-secondary checkBox'
-                                />
-                                <Form.Check
-                                    defaultChecked={false}
-                                    onClick={(e) => handleCategoryClick(e)}
-                                    type='checkbox'
-                                    id='default-checkbox-2'
-                                    label='Business'
-                                    name='business'
-                                    className='text-primary link-secondary checkBox'
-                                />
-                                <Form.Check
-                                    defaultChecked={false}
-                                    onClick={(e) => handleCategoryClick(e)}
-                                    type='checkbox'
-                                    id='default-checkbox-3'
-                                    label='Technology'
-                                    name='tech'
-                                    className='text-primary link-secondary checkBox'
-                                />
-                                <Form.Check
-                                    defaultChecked={false}
-                                    onClick={(e) => handleCategoryClick(e)}
-                                    type='checkbox'
-                                    id='default-checkbox-4'
-                                    label='Sports'
-                                    name='sports'
-                                    className='text-primary link-secondary checkBox'
-                                />
-                                <Form.Check
-                                    defaultChecked={false}
-                                    onClick={(e) => handleCategoryClick(e)}
-                                    type='checkbox'
-                                    id='default-checkbox-5'
-                                    label='Entertainment'
-                                    name='entertainment'
-                                    className='text-primary link-secondary checkBox'
-                                />
-                                <Form.Check
-                                    defaultChecked={false}
-                                    onClick={(e) => handleCategoryClick(e)}
-                                    type='checkbox'
-                                    id='default-checkbox-6'   
-                                    label='Politics'
-                                    name='politics'
-                                    className='text-primary link-secondary checkBox'
-                                />
-                                <Form.Check
-                                    defaultChecked={false}
-                                    onClick={(e) => handleCategoryClick(e)}
-                                    type='checkbox'
-                                    id='default-checkbox-7'   
-                                    label='Science'
-                                    name='science'
-                                    className='text-primary link-secondary checkBox'
-                                />
-                                <Form.Check
-                                    defaultChecked={false}
-                                    onClick={(e) => handleCategoryClick(e)}
-                                    type='checkbox'
-                                    id='default-checkbox-8'   
-                                    label='Health'
-                                    name='health'
-                                    className='text-primary link-secondary checkBox'
-                                />
-                                <Button
-                                    onClick={(e) => handleClearCategories(e)}
-                                    className='btn-danger btn-sm'
-                                >
-                                    Clear Categories
-                                </Button>
-                            </Form>
-                        </Nav>
+                {
+                    winSize<996 &&
+                    <Row>
+                        <Col xs={4} className='flex  justify-center mb-3'>
+                            <Dropdown>
+                                <Dropdown.Toggle>
+                                    Category
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Form ref={elementsRef} class="d-flex flex-col pl-2">
+                                        <Form.Check
+                                            defaultChecked={false}
+                                            onClick={(e) => handleCategoryClick(e)}
+                                            type='checkbox'
+                                            id='default-checkbox-0'
+                                            label='General'
+                                            name='general'
+                                            className='text-primary link-secondary checkBox'
+                                        />
+                            
+                                        <Form.Check
+                                            defaultChecked={false}
+                                            onClick={(e) => handleCategoryClick(e)}
+                                            type='checkbox'
+                                            id='default-checkbox-1'
+                                            label='Food'
+                                            name='food'
+                                            className='text-primary link-secondary checkBox'
+                                        />
+    
+                                        <Form.Check
+                                            defaultChecked={false}
+                                            onClick={(e) => handleCategoryClick(e)}
+                                            type='checkbox'
+                                            id='default-checkbox-2'
+                                            label='Business'
+                                            name='business'
+                                            className='text-primary link-secondary checkBox'
+                                        />
+                                        <Form.Check
+                                            defaultChecked={false}
+                                            onClick={(e) => handleCategoryClick(e)}
+                                            type='checkbox'
+                                            id='default-checkbox-3'
+                                            label='Technology'
+                                            name='tech'
+                                            className='text-primary link-secondary checkBox'
+                                        />
+                                        <Form.Check
+                                            defaultChecked={false}
+                                            onClick={(e) => handleCategoryClick(e)}
+                                            type='checkbox'
+                                            id='default-checkbox-4'
+                                            label='Sports'
+                                            name='sports'
+                                            className='text-primary link-secondary checkBox'
+                                        />
+                                        <Form.Check
+                                            defaultChecked={false}
+                                            onClick={(e) => handleCategoryClick(e)}
+                                            type='checkbox'
+                                            id='default-checkbox-5'
+                                            label='Entertainment'
+                                            name='entertainment'
+                                            className='text-primary link-secondary checkBox'
+                                        />
+                                        <Form.Check
+                                            defaultChecked={false}
+                                            onClick={(e) => handleCategoryClick(e)}
+                                            type='checkbox'
+                                            id='default-checkbox-6'
+                                            label='Politics'
+                                            name='politics'
+                                            className='text-primary link-secondary checkBox'
+                                        />
+                                        <Form.Check
+                                            defaultChecked={false}
+                                            onClick={(e) => handleCategoryClick(e)}
+                                            type='checkbox'
+                                            id='default-checkbox-7'
+                                            label='Science'
+                                            name='science'
+                                            className='text-primary link-secondary checkBox'
+                                        />
+                                        <Form.Check
+                                            defaultChecked={false}
+                                            onClick={(e) => handleCategoryClick(e)}
+                                            type='checkbox'
+                                            id='default-checkbox-8'
+                                            label='Health'
+                                            name='health'
+                                            className='text-primary link-secondary checkBox'
+                                        />
+                                    </Form>
+                                    <Button
+                                        onClick={(e) => handleClearCategories(e)}
+                                        className='btn-danger btn-sm '
+                                    >
+                                        Clear All
+                                    </Button>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Col>
 
-                        <Nav className='flex-column mb-3'>
+
+                        <Col xs={4} className='d-flex justify-center mb-3'>
                             <Dropdown>
                                 <Dropdown.Toggle>
                                     SortBy
@@ -262,9 +282,9 @@ function Home() {
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
-                        </Nav>
+                        </Col>
 
-                        <Nav className='flex-column'>
+                        <Col xs={4} className='d-flex justify-center'>
                             <Dropdown>
                                 <Dropdown.Toggle>
                                     Country
@@ -290,11 +310,172 @@ function Home() {
                                     }
                                 </Dropdown.Menu>
                             </Dropdown>
-                        </Nav>
-                        
-                    </Col>
+                        </Col>
+                    </Row>
+                }
+                <Row>
+                    {
+                        winSize>=996 && 
+                        <Col lg={2}>
+                            <h5>Categories</h5>
+                            <Nav className='flex-column mb-4'>
+                                <Form ref={elementsRef}>
+                                    <Form.Check
+                                        defaultChecked={false}
+                                        onClick={(e) => handleCategoryClick(e)}
+                                        type='checkbox'
+                                        id='default-checkbox-0'
+                                        label='General'
+                                        name='general'
+                                        className='text-primary link-secondary checkBox'
+                                    />
+                                    <Form.Check
+                                        defaultChecked={false}
+                                        onClick={(e) => handleCategoryClick(e)}
+                                        type='checkbox'
+                                        id='default-checkbox-1'
+                                        label='Food'
+                                        name='food'
+                                        className='text-primary link-secondary checkBox'
+                                    />
+                                    <Form.Check
+                                        defaultChecked={false}
+                                        onClick={(e) => handleCategoryClick(e)}
+                                        type='checkbox'
+                                        id='default-checkbox-2'
+                                        label='Business'
+                                        name='business'
+                                        className='text-primary link-secondary checkBox'
+                                    />
+                                    <Form.Check
+                                        defaultChecked={false}
+                                        onClick={(e) => handleCategoryClick(e)}
+                                        type='checkbox'
+                                        id='default-checkbox-3'
+                                        label='Technology'
+                                        name='tech'
+                                        className='text-primary link-secondary checkBox'
+                                    />
+                                    <Form.Check
+                                        defaultChecked={false}
+                                        onClick={(e) => handleCategoryClick(e)}
+                                        type='checkbox'
+                                        id='default-checkbox-4'
+                                        label='Sports'
+                                        name='sports'
+                                        className='text-primary link-secondary checkBox'
+                                    />
+                                    <Form.Check
+                                        defaultChecked={false}
+                                        onClick={(e) => handleCategoryClick(e)}
+                                        type='checkbox'
+                                        id='default-checkbox-5'
+                                        label='Entertainment'
+                                        name='entertainment'
+                                        className='text-primary link-secondary checkBox'
+                                    />
+                                    <Form.Check
+                                        defaultChecked={false}
+                                        onClick={(e) => handleCategoryClick(e)}
+                                        type='checkbox'
+                                        id='default-checkbox-6'   
+                                        label='Politics'
+                                        name='politics'
+                                        className='text-primary link-secondary checkBox'
+                                    />
+                                    <Form.Check
+                                        defaultChecked={false}
+                                        onClick={(e) => handleCategoryClick(e)}
+                                        type='checkbox'
+                                        id='default-checkbox-7'   
+                                        label='Science'
+                                        name='science'
+                                        className='text-primary link-secondary checkBox'
+                                    />
+                                    <Form.Check
+                                        defaultChecked={false}
+                                        onClick={(e) => handleCategoryClick(e)}
+                                        type='checkbox'
+                                        id='default-checkbox-8'   
+                                        label='Health'
+                                        name='health'
+                                        className='text-primary link-secondary checkBox'
+                                    />
+                                    <Button
+                                        onClick={(e) => handleClearCategories(e)}
+                                        className='btn-danger btn-sm'
+                                    >
+                                        Clear All
+                                    </Button>
+                                </Form>
+                            </Nav>
 
-                    <Col xs={12} md={10}>
+                            <Nav className='flex-column mb-3'>
+                                <Dropdown>
+                                    <Dropdown.Toggle>
+                                        SortBy
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                setsortBy(prev => "")
+                                            }}
+                                        >
+                                            None
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                setsortBy(prev => "published_at")
+                                            }}
+                                        >
+                                            publishedAt
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                setsortBy(prev => "relevance_score")
+                                            }}
+                                        >
+                                            relevance
+                                        </Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Nav>
+
+                            <Nav className='flex-column'>
+                                <Dropdown>
+                                    <Dropdown.Toggle>
+                                        Country
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu className='overflow-x-hidden overflow-scroll h-[15rem]'>
+                                        {
+                                            countries.map((elem, index) => {
+                                                return(
+                                                    <Dropdown.Item key={index}
+                                                        onClick={(e) => {
+                                                            e.preventDefault()
+                                                            if(elem === "None"){
+                                                                setcountry("")
+                                                            }else{
+                                                                setcountry(prev => elem.toLowerCase())
+                                                            }
+                                                        }}
+                                                    >
+                                                        {elem}
+                                                    </Dropdown.Item>
+                                                )
+                                            })
+                                        }
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Nav>
+                            
+                        </Col>
+                    }
+
+                    <Col xs={12} md={12} lg={10}>
                         <NewsList Category={category} Country={country} SortBy={sortBy} SearchTerm={searchTerm}/>
                     </Col>
                 </Row>
