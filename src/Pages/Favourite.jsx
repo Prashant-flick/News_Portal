@@ -14,20 +14,12 @@ import { useNavigate } from 'react-router-dom'
 import FavouriteNewsList from '../Component/FavouriteNewsList'
 
 function Favourite() {
-    const elementsRef = useRef(null);
-    const searchRef = useRef(null);
     const navigate = useNavigate()
-    const [searchTerm, setsearchTerm] = useState("")
     const [showhover,setshowhover] = useState(false)
 
     const handleSearchTerm = (e) => {
         e.preventDefault()
-        setcategory([]);
-        const elements = elementsRef.current.querySelectorAll('.checkBox');
-        elements.forEach(element => {
-            element.children[0].checked = false
-        });
-        setsearchTerm(prev => e.target.search.value)
+        navigate(`/?q=${e.target.search.value}`)
     }
 
     return (
@@ -50,7 +42,6 @@ function Favourite() {
                             className="d-flex"
                         >
                             <FormControl
-                                ref={searchRef}
                                 type="text"
                                 placeholder="Search"
                                 className="me-2"
@@ -90,7 +81,7 @@ function Favourite() {
             <Container>
                 <Row>
                     <Col>
-                        <FavouriteNewsList SearchTerm={searchTerm} />
+                        <FavouriteNewsList />
                     </Col>
                 </Row>
             </Container>

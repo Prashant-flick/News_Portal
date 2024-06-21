@@ -12,18 +12,16 @@ import {
 } from "react-bootstrap"
 import NewsList from '../Component/NewsList.jsx'
 import { useNavigate } from 'react-router-dom'
+import useSize from '../hooks/useSize.jsx'
 
 function Home() {
     const [category, setcategory] = useState([])
     const [sortBy, setsortBy] = useState("")
     const [country, setcountry] = useState("")
-    const [searchTerm, setsearchTerm] = useState("")
     const [showhover, setshowhover] = useState(false)
-    const [winSize, setwinSize] = useState(null)
-
-    console.log(category);
-    console.log(sortBy);
-    console.log(country);
+    const [colorMode, setcolorMode] = useState("Dark Mode")
+    
+    const winSize = useSize()
 
     const countries = [
         "None",
@@ -49,23 +47,25 @@ function Home() {
         "CA"
     ];
 
-    useEffect(() => {
-        setwinSize(window.innerWidth)
-    },[winSize])
-
     const elementsRef = useRef(null);
     const searchRef = useRef(null);
     const navigate = useNavigate()
 
+    const handlecolorMode = (e) => {
+        let element = document.body;
+        element.dataset.bsTheme = element.dataset.bsTheme == "light" ? "dark" : "light";
+        setcolorMode((elem) => elem=="Dark Mode" ? "Light Mode" : "Dark Mode")
+    }
+
     const handleCategoryClick = (e) => {
         console.log(e.target.name);
-        setsearchTerm(prev => "")
         searchRef.current.value = ""
         if(e.target.checked === true){
             setcategory((prev) => [...prev, e.target.name])
         }else{
             setcategory((prev) => prev.filter((elem) => elem!==e.target.name))
         }
+        navigate('/')
     }
 
     const handleClearCategories = (e) => {
@@ -75,21 +75,17 @@ function Home() {
         elements.forEach(element => {
             element.children[0].checked = false
         });
+        navigate('/')
     };
 
     const handleSearchTerm = (e) => {
         e.preventDefault()
-        setcategory([]);
-        const elements = elementsRef.current.querySelectorAll('.checkBox');
-        elements.forEach(element => {
-            element.children[0].checked = false
-        });
-        setsearchTerm(prev => e.target.search.value)
+        navigate(`/?q=${e.target.search.value}`)
     }
 
     return (
         <>
-            <Navbar bg="light" expand="lg" className="mb-1">
+            <Navbar expand="lg" className={`${winSize[1]>=996 ? 'mb-5' : 'mb-3'}`}>
                 <Container>
                     <Navbar.Brand href="/" className="fw-bold fs-4">
                         NewsLetter
@@ -101,6 +97,17 @@ function Home() {
                         <Nav className="me-auto">
 
                         </Nav>
+
+                        <Form
+                            className='mr-4'
+                        >
+                            <Form.Check 
+                                onClick={(e) => handlecolorMode(e)}
+                                type='switch'
+                                id='custom-switch'
+                                label={colorMode}
+                            />
+                        </Form>
 
                         <Form 
                             onSubmit={(e) => handleSearchTerm(e)}
@@ -131,7 +138,7 @@ function Home() {
                             e.preventDefault()
                             navigate('/favourite')
                         }}
-                        className='border-1 border-black bg-red-500 w-10 h-10 rounded-full flex justify-center items-center'
+                        className='border-1 border-black bg-red-500 w-8 h-8 rounded-full flex justify-center items-center'
                     >
                         <span class="material-symbols-outlined">
                             favorite
@@ -146,15 +153,15 @@ function Home() {
 
             <Container>
                 {
-                    winSize<996 &&
+                    winSize[1]<996 &&
                     <Row>
-                        <Col xs={4} className='flex  justify-center mb-3'>
+                        <Col xs={4} className='flex justify-center mb-3'>
                             <Dropdown>
                                 <Dropdown.Toggle>
                                     Category
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Form ref={elementsRef} class="d-flex flex-col pl-2">
+                                    <Form ref={elementsRef} class="d-flex flex-col" className='ml-2'>
                                         <Form.Check
                                             defaultChecked={false}
                                             onClick={(e) => handleCategoryClick(e)}
@@ -315,7 +322,7 @@ function Home() {
                 }
                 <Row>
                     {
-                        winSize>=996 && 
+                        winSize[1]>=996 && 
                         <Col lg={2}>
                             <h5>Categories</h5>
                             <Nav className='flex-column mb-4'>
@@ -476,7 +483,7 @@ function Home() {
                     }
 
                     <Col xs={12} md={12} lg={10}>
-                        <NewsList Category={category} Country={country} SortBy={sortBy} SearchTerm={searchTerm}/>
+                        <NewsList Category={category} Country={country} SortBy={sortBy}/>
                     </Col>
                 </Row>
             </Container>

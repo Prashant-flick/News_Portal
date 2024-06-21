@@ -25,8 +25,8 @@ function NewsList(props) {
 				{loading ? <div className="flex h-[80vh] justify-center items-center text-lg">Loading...</div> : newsData?.map((article,index) => {
 					return (
 						<Col xs={12} md={6} lg={4} key={index}>
-							<Card style={{ maxHeight: '80vh', overflowY: 'auto', alignItems: 'center' }} className="mb-3">
-								<Card.Img src={article?.image_url} variant="top" />
+							<Card style={{ maxHeight: '80vh', height: '80vh', overflowY: 'auto', alignItems: 'center' }} className="mb-3">
+								<Card.Img src={article?.image_url} variant="top" className="" style={{height : '30vh' , objecFit: 'cover'}}/>
 								<AddToFavourite article={article}/>
 								<Card.Body>
 									<Card.Title>{article?.title}</Card.Title>
