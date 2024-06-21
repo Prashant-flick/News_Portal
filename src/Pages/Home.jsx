@@ -21,6 +21,7 @@ function Home() {
     const [showhover, setshowhover] = useState(false)
     const [colorMode, setcolorMode] = useState("Dark Mode")
     
+    //here useSize custom hook is used to get the window size of every window resize event
     const winSize = useSize()
 
     const countries = [
