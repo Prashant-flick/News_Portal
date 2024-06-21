@@ -11,12 +11,14 @@ import {
     Container
 } from "react-bootstrap"
 import NewsList from '../Component/NewsList.jsx'
+import { useNavigate } from 'react-router-dom'
 
 function Home() {
     const [category, setcategory] = useState([])
     const [sortBy, setsortBy] = useState("")
     const [country, setcountry] = useState("")
     const [searchTerm, setsearchTerm] = useState("")
+    const [showhover, setshowhover] = useState(false)
 
     const countries = [
         "None",
@@ -44,6 +46,7 @@ function Home() {
 
     const elementsRef = useRef(null);
     const searchRef = useRef(null);
+    const navigate = useNavigate()
 
     const handleCategoryClick = (e) => {
         setsearchTerm(prev => "")
@@ -111,8 +114,22 @@ function Home() {
                         </Form>
                     </Navbar.Collapse>
 
-                    <button>
-
+                    <button
+                        onMouseEnter={() => setshowhover(true)}
+                        onMouseLeave={() => setshowhover(false)}
+                        onClick={(e) => {
+                            e.preventDefault()
+                            navigate('/favourite')
+                        }}
+                        className='border-1 border-black bg-red-500 w-10 h-10 rounded-full flex justify-center items-center'
+                    >
+                        <span class="material-symbols-outlined">
+                            favorite
+                        </span>
+                        {
+                            showhover &&
+                            <h6 className='absolute top-14 bg-gray-400 px-2 py-1'>Fav Articles</h6>
+                        }
                     </button>
                 </Container>
             </Navbar>

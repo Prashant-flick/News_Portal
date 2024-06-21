@@ -2,11 +2,11 @@ import { Card, Col, Container, Row} from "react-bootstrap"
 import UseNewsData from '../hooks/UseNewsData'
 import CustomPagination from "./CustomPagination";
 import { useEffect, useState } from "react";
-import { CiHeart } from "react-icons/ci";
+import AddToFavourite from "./AddToFavourite.jsx";
 
 function NewsList(props) {
 	const [currentPage, setCurrentPage] = useState(1);
-
+	
 	const handlePagination = (i) => {
 		setCurrentPage(i);
 	}
@@ -27,10 +27,7 @@ function NewsList(props) {
 						<Col xs={12} md={6} lg={4} key={index}>
 							<Card style={{ maxHeight: '80vh', overflowY: 'auto', alignItems: 'center' }} className="mb-3">
 								<Card.Img src={article?.image_url} variant="top" />
-								<div className="flex justify-center pt-1 rounded-xl hover:bg-red-500 align-middle mt-3 h-auto border-1 border-gray-700 w-40">
-									<CiHeart />
-									<h6>Add to favourite</h6>
-								</div>
+								<AddToFavourite article={article}/>
 								<Card.Body>
 									<Card.Title>{article?.title}</Card.Title>
 									<Card.Text>{article?.description}</Card.Text>

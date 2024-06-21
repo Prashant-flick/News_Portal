@@ -23,15 +23,14 @@ function UseNewsData(props, currentPage) {
                         categoryParam += `,${Category[i]}`
                     }
                 }
-                // const categoryParam = Category.length>0 ? `categories=${Category[0]}` : "";
                 let searchParam = SearchTerm ? `search=${SearchTerm}` : "";
                 const countryParam = Country ? `&locale=${Country}` : "";
                 const sortParam = SortBy ? `&sort=${SortBy}` : "";
                 api_key = `&api_token=${api_key}`
 
                 api_url = api_url + categoryParam + searchParam + countryParam + sortParam + "&language=en" + api_key + '&limit=3' + `&page=${currentPage}`;
-                // const data = await axios.get(api_url)
-                console.log(api_url);
+                const data = await axios.get(api_url)
+                // console.log(api_url);
                 settotalArticles(prev => data.data.meta.found)
                 setnewsData(prev => data.data.data)
                 setloading(false)
