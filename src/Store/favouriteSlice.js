@@ -9,7 +9,7 @@ const favouriteSlice = createSlice({
     initialState,
     reducers: {
         addArticle: (state, action) => {
-            state.ArticleData = [...state.ArticleData, action.payload]
+            state.ArticleData = [ action.payload, ...state.ArticleData]
         },
         deleteArticle : (state, action) => {
             state.ArticleData = state.ArticleData.filter((elem) => elem?.article?.uuid!==action.payload?.article?.uuid)

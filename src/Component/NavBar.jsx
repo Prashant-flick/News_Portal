@@ -42,7 +42,7 @@ function NavBar() {
                 <Navbar.Brand href="/" className="fw-bold fs-1">
                     NewsLetter
                 </Navbar.Brand>
-
+                
                 <Navbar.Toggle aria-controls="navbar-nav" />
 
                 <Navbar.Collapse id="navbar-nav" className='justify-between'>
@@ -57,7 +57,6 @@ function NavBar() {
                             label={colorMode}
                         />
                     </Form>
-
                     <Form 
                         onSubmit={(e) => handleSearchTerm(e)}
                         className="d-flex"

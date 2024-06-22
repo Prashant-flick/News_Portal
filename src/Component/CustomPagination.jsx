@@ -6,7 +6,8 @@ import {
 } from "react-bootstrap"
 
 function CustomPagination(props) {
-    const {currentPage, totalPages, handlePagination} = props
+    let {currentPage, totalPages, handlePagination} = props
+    totalPages = totalPages>6666 ? 6666 : totalPages;
 
     const handlePageChange = (pageNo) => {
         pageNo = parseInt(pageNo)
@@ -16,16 +17,11 @@ function CustomPagination(props) {
     const renderPageItems = () => {
         const pageItems = [];
 
-        let startingPage = currentPage>=3 ? currentPage-2 : 1;
-        let endingPage = currentPage<=totalPages-2 ? currentPage+2 : totalPages;
-
-        for(let i=startingPage; i<=endingPage; i++){
-            pageItems.push(
-                <Pagination.Item key={i} active={i === currentPage} onClick={() => handlePagination(i)}>
-                    {i}
-                </Pagination.Item>
-            )
-        }
+        pageItems.push(
+            <Pagination.Item key={currentPage} active={true} onClick={() => handlePagination(currentPage)}>
+                {currentPage}
+            </Pagination.Item>
+        )
 
         return pageItems;
     }
@@ -40,7 +36,36 @@ function CustomPagination(props) {
                         handlePageChange(currentPage-1)
                     }}
                 />
-                    {renderPageItems()}
+
+                <Pagination.Item
+                    hidden={currentPage === 1}
+                    onClick={(e) => {
+                        e.preventDefault()
+                        handlePageChange(1)
+                    }}
+                >
+                    {1}
+                </Pagination.Item>
+                <Pagination.Ellipsis
+                    hidden={currentPage === 1}
+                />
+
+                {renderPageItems()}
+                
+                <Pagination.Ellipsis 
+                    hidden={totalPages === currentPage}
+                />
+
+                <Pagination.Item
+                    hidden={totalPages === currentPage}
+                    onClick={(e) => {
+                        e.preventDefault()
+                        handlePageChange(totalPages)
+                    }}
+                >
+                    {totalPages}
+                </Pagination.Item>
+
                 <Pagination.Next 
                     disabled={currentPage === totalPages} 
                     onClick={(e) => {
@@ -48,6 +73,7 @@ function CustomPagination(props) {
                         handlePageChange(currentPage+1)
                     }}
                 />
+                
             </Pagination>
             <Form 
                 onSubmit={(e) => {
@@ -75,7 +101,7 @@ function CustomPagination(props) {
                     Go
                 </Button>
             </Form>
-            <label htmlFor="">LastPage: {totalPages}</label>
+            {/* <label htmlFor="">LastPage: {totalPages}</label> */}
         </div>
     )
 }

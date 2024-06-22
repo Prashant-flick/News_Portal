@@ -50,7 +50,7 @@ function FavouriteNewsList() {
 				{newsData?.map((article,index) => {
 					article = article?.article
 					return (
-						<Col xs={12} md={6} lg={4} key={index}>
+						<Col xs={12} md={6} lg={4} className='pt-4' key={index}>
 							<Card style={{ maxHeight: '80vh', overflowY: 'auto', alignItems: 'center' }} className="mb-3">
 								<Card.Img src={article?.image_url} variant="top" />
 								<AddToFavourite article={article}/>

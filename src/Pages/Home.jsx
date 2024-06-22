@@ -45,7 +45,6 @@ function Home() {
     ];
 
     const elementsRef = useRef(null);
-    const searchRef = useRef(null);
     const navigate = useNavigate()
 
     const handleCategoryClick = (e) => {
