@@ -59,6 +59,7 @@ function FavouriteNewsList() {
 									<Card.Text>{article?.description}</Card.Text>
 									<Card.Text>{article?.snippet}</Card.Text>
 									<Card.Link
+										className='cursor-pointer'
 										onClick={(e) => handleReadMore(e, article)}
 									>read more...</Card.Link>
 								</Card.Body>
