@@ -6,7 +6,7 @@ function DetailedArticle() {
     const article = useSelector((state) => state.CurrentArticleReducer?.ArticleData)
 
     return (
-        <div className='flex flex-col xl:px-32 md:px-16 sm:px-4 max-sm:px-4 mt-4'>
+        <div className='flex flex-col xl:px-32 md:px-16 sm:px-8 max-sm:px-4 mt-4'>
             <h1 className='self-center mb-4'>{article?.title}</h1>
             <img src={article?.image_url} alt="no image preview" className='self-center w-3/4 mb-4' />
             <p className='xl:text-3xl md:text-xl text-xl'>{article?.description}</p>
